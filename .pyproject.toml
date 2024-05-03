@@ -1,0 +1,97 @@
+[tool.taskipy.tasks]
+coverage = "coverage html && open htmlcov/index.html"
+docs = "mkdocs serve"
+test = "pytest -s -x --cov=pyimg -vv"
+
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = "--doctest-modules"
+
+# Ruff config
+[tool.ruff]
+extend-exclude = ["tests"]
+
+[tool.ruff.lint]
+preview = true
+select = [
+    # pycodestyle
+    "E",
+    "W",
+    # mccabe (code complexity)
+    "C90",
+    # Pyflakes
+    "F",
+    # pep8-naming,
+    "N",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # Others
+    "YTT",
+    "ANN",
+    "S", # bandit
+    "FBT",
+    "A",
+    "COM",
+    "C4",
+    "DTZ",
+    "T10",
+    "FA",
+    "ISC",
+    "ICN",
+    "G",
+    "INP",
+    "PIE",
+    "T20", # print finder
+    "PYI",
+    "PT",
+    "Q",
+    "RSE",
+    "RET",
+    "SLF",
+    "SLOT",
+    "SIM",
+    "TID",
+    "TCH",
+    "INT",
+    "ARG",
+    "PTH",  # change from strings to path obj
+    "TD",
+    "FIX",
+    "ERA",
+    "PD",
+    "PGH",
+    "PL",
+    "TRY",
+    "FLY",
+    "NPY",
+    "AIR",
+    "PERF",
+    "FURB",
+    "LOG",
+    "RUF"
+]
+ignore = ["ANN202",
+    "S101",
+    "RET504",
+    "PD901",
+    "PLR0912",
+    "PLR0913",
+    "ISC001", # conflicts with COM812
+    "FURB101", # not complain with open
+    "PLW1514", # not complain with open
+    "PTH123", # not complain with open
+    "TRY003",
+    "B023", # affects pandas lambda apply
+    "PD015", # let's use pd.merge
+    "COM812", # conficts stuff
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"

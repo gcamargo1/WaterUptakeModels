@@ -1,5 +1,5 @@
-'''Framework to compare water uptake and water stress algorithms for the
-    APSIM, CropSyst, DSSAT, EPIC, SWAP and WOFOST simulation models '''
+"""Framework to compare water uptake and water stress algorithms for the
+    APSIM, CropSyst, DSSAT, EPIC, SWAP and WOFOST simulation models """
 #!/usr/bin/env python
 from __future__ import division
 from xlrd import open_workbook
@@ -10,8 +10,8 @@ from Print_class import PrintOutput
 
 def main():
     # Control initialization
-    book = open_workbook('sim_data.xls') # Input data
-    sheet_inputs = book.sheet_by_name('inputs')
+    book = open_workbook("sim_data.xls")  # Input data
+    sheet_inputs = book.sheet_by_name("inputs")
     start_day = int(sheet_inputs.cell(2, 1).value)
     end_day = int(sheet_inputs.cell(3, 1).value)
     start_year = int(sheet_inputs.cell(4, 1).value)
@@ -33,8 +33,14 @@ def main():
     crop_feddes = Crop(1, sim_length, book, soil_feddes)
     crop_epic = Crop(1, sim_length, book, soil_epic)
     crop_wofost = Crop(1, sim_length, book, soil_wofost)
-    crop_list = [crop_campbell, crop_dssat, crop_apsim, crop_feddes, crop_epic,
-                 crop_wofost]
+    crop_list = [
+        crop_campbell,
+        crop_dssat,
+        crop_apsim,
+        crop_feddes,
+        crop_epic,
+        crop_wofost,
+    ]
 
     # Print initialization
     print_outputs_campbell = PrintOutput(soil_campbell)
@@ -48,7 +54,6 @@ def main():
     new_year = start_year
     day_of_year = start_day
     sim_day = 1
-
 
     # All solar radiation intercepted by canopy
     crop_campbell.light_intercpt = 1
@@ -83,30 +88,35 @@ def main():
         soil_wofost.update_water_content([crop_wofost])
 
         # Print outputs
-        print_outputs_campbell.daily(sim_day, new_year, day_of_year,
-                                     crop_campbell, soil_campbell)
-        print_outputs_dssat.daily(sim_day, new_year, day_of_year, crop_dssat,
-                                  soil_dssat)
-        print_outputs_apsim.daily(sim_day, new_year, day_of_year, crop_apsim,
-                                  soil_apsim)
-        print_outputs_feddes.daily(sim_day, new_year, day_of_year, crop_feddes,
-                                   soil_feddes)
-        print_outputs_epic.daily(sim_day, new_year, day_of_year, crop_epic,
-                                 soil_epic)
-        print_outputs_wofost.daily(sim_day, new_year, day_of_year, crop_wofost,
-                                   soil_wofost)
-        sim_day += 1 # New simulation day
+        print_outputs_campbell.daily(
+            sim_day, new_year, day_of_year, crop_campbell, soil_campbell
+        )
+        print_outputs_dssat.daily(
+            sim_day, new_year, day_of_year, crop_dssat, soil_dssat
+        )
+        print_outputs_apsim.daily(
+            sim_day, new_year, day_of_year, crop_apsim, soil_apsim
+        )
+        print_outputs_feddes.daily(
+            sim_day, new_year, day_of_year, crop_feddes, soil_feddes
+        )
+        print_outputs_epic.daily(sim_day, new_year, day_of_year, crop_epic, soil_epic)
+        print_outputs_wofost.daily(
+            sim_day, new_year, day_of_year, crop_wofost, soil_wofost
+        )
+        sim_day += 1  # New simulation day
         day_of_year += 1
 
         # Save excel files and end simulation
         if new_year == end_year and day_of_year == end_day:
-            print_outputs_campbell.save_data('campbell_output.xls')
-            print_outputs_dssat.save_data('DSSAT_output.xls')
-            print_outputs_apsim.save_data('APSIM_output.xls')
-            print_outputs_feddes.save_data('feddes_output.xls')
-            print_outputs_epic.save_data('epic_output.xls')
-            print_outputs_wofost.save_data('wofost_output.xls')
-            break # end of simulation
+            print_outputs_campbell.save_data("campbell_output.xls")
+            print_outputs_dssat.save_data("DSSAT_output.xls")
+            print_outputs_apsim.save_data("APSIM_output.xls")
+            print_outputs_feddes.save_data("feddes_output.xls")
+            print_outputs_epic.save_data("epic_output.xls")
+            print_outputs_wofost.save_data("wofost_output.xls")
+            break  # end of simulation
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
